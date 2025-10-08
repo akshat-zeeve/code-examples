@@ -6,7 +6,7 @@ require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const { ethers } = require('hardhat');
 
 const mainnetBridgeAddress = '0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe';
-const testnetBridgeAddress = '0xF6BEEeBB578e214CA9E23B0e9683454Ff88Ed2A7';
+const testnetBridgeAddress = '0x528e26b25a34a4A5d0dbDa1d57D318153d2ED582';
 
 const create2Contract = '0x4e59b44847b379578588920ca78fbf26c0b4956c';
 const saltCreate2 = '0x0000000000000000000000000000000000000000000000000000000000000000';
@@ -19,11 +19,11 @@ async function main() {
     // Use mainnet bridge address
     if (networkName === 'mainnet') {
         zkEVMBridgeContractAddress = mainnetBridgeAddress;
-        zkEVMProvider = new ethers.providers.JsonRpcProvider('https://zkevm-rpc.com');
-    } else if (networkName === 'goerli') {
+        zkEVMProvider = new ethers.providers.JsonRpcProvider(process.env.L2_RPC);
+    } else if (networkName === 'sepolia') {
         // Use testnet bridge address
         zkEVMBridgeContractAddress = testnetBridgeAddress;
-        zkEVMProvider = new ethers.providers.JsonRpcProvider('https://rpc.public.zkevm-test.net');
+        zkEVMProvider = new ethers.providers.JsonRpcProvider(process.env.L2_RPC);
     } else {
         throw new Error('Network not supported');
     }
