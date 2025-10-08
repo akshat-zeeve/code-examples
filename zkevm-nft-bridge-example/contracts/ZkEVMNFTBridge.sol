@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0
 
-pragma solidity 0.8.17;
+pragma solidity ^0.8.17;
 
 import "./ERC721Wrapped.sol";
 import "./polygonZKEVMContracts/interfaces/IBasePolygonZkEVMGlobalExitRoot.sol";
 import "./polygonZKEVMContracts/interfaces/IBridgeMessageReceiver.sol";
-import "./polygonZKEVMContracts/interfaces/IPolygonZkEVMBridge.sol";
+import "./polygonZKEVMContracts/PolygonZkEVMBridgeV2.sol";
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 
 /**
@@ -19,7 +19,7 @@ contract ZkEVMNFTBridge is ERC721Holder, IBridgeMessageReceiver {
     }
 
     // Global Exit Root address
-    IPolygonZkEVMBridge public immutable polygonZkEVMBridge;
+    PolygonZkEVMBridgeV2 public immutable polygonZkEVMBridge;
 
     // Current network identifier
     uint32 public immutable networkID;
@@ -33,7 +33,7 @@ contract ZkEVMNFTBridge is ERC721Holder, IBridgeMessageReceiver {
     /**
      * @param _polygonZkEVMBridge Polygon zkevm bridge address
      */
-    constructor(IPolygonZkEVMBridge _polygonZkEVMBridge) {
+    constructor(PolygonZkEVMBridgeV2 _polygonZkEVMBridge) {
         polygonZkEVMBridge = _polygonZkEVMBridge;
         networkID = polygonZkEVMBridge.networkID();
     }
