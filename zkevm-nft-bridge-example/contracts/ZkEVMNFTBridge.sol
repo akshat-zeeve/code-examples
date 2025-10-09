@@ -89,6 +89,10 @@ contract ZkEVMNFTBridge is ERC721Holder, IBridgeMessageReceiver {
         address originTokenAddress = token;
 
         TokenInformation memory tokenInfo = wrappedTokenToTokenInfo[token];
+
+        // Read token URI before burning
+        string memory uri = _safeTokenURI(token, tokenId);
+
         if (tokenInfo.originTokenAddress != address(0)) {
             // The token is a wrapped token from another network
 
@@ -109,7 +113,7 @@ contract ZkEVMNFTBridge is ERC721Holder, IBridgeMessageReceiver {
             tokenId,
             _safeName(token),
             _safeSymbol(token),
-            _safeTokenURI(token, tokenId)
+            uri
         );
 
         // It's supposed that both contracts will be deployed with the same address
